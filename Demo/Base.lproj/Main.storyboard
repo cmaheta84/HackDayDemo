@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -15,11 +15,39 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" fixedFrame="YES" indicatorStyle="black" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvk-23-iT7">
+                                <rect key="frame" x="0.0" y="58" width="320" height="415"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <mutableString key="text">                         It takes serious style and confidence to outdo Angelina Jolie on the red carpet.
+Jane Fonda, 76, who's twice the age of the 38-year-old "Maleficent" star, managed to do it Wednesday at the Cannes Film Festival in France. She stepped out in a deep red, beaded and belted Elie Saab Fall 2013 Couture gown for the premiere of Nicole Kidman's movie "Grace of Monaco." Fonda accessorized her figure-fitting dress with a Gucci clutch, red earrings, and va-va-voom hair and lipstick.
+
+The gorgeous dress was familiar to anyone who saw Jolie wear the metallic version of the garment at the Oscars in March. Jolie sported the gown with straight tresses, soft makeup, and diamond jewels. The result was lovely; however, it fell short of a "fashion moment."
+
+Celebrity stylist Daniel Musto — who has worked with stars such as Ashlee Simpson and Jenny McCarthy — cited the women's choice of color as the factor that gave Fonda the advantage."The dress needs the contrasting burgundy color to really make the skin pop," Musto told "The Insider With Yahoo." "Angelina's bland silver tone didn't do the trick."
+
+Fit was also an issue. "The fitted sleeve on Jane Fonda's dress streamlined the look, while the loose fitting sleeve on Angelina messes with the proportions," he added.
+
+ 
+Jolie has traditionally chosen to cover up her svelte figure on the red carpet — except for her right leg, of course — yet she still impresses with her wardrobe choices. (Kim Kardashian types take note!)
+
+[Related: 2 Years Later, Angelina Jolie Gets in on 'Angie's Right Leg' Meme]
+
+Meanwhile, the aerobics queen has obviously decided to make every appearance at Cannes count.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="textField" destination="wvk-23-iT7" id="Vh0-Li-D7h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="139" y="70"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
