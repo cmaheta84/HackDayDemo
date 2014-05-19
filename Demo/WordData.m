@@ -12,6 +12,10 @@
 
 +(NSRange) getNextWordRange:(NSRange) inRange : (NSMutableArray *) list :(NSInteger *) index{
     
+    if(list.count<=0) {
+        NSRange range = NSMakeRange(0, 0);
+        return range;
+    }
     NSInteger iCount = 0;
     for(WordData *data in list) {
         iCount++;
@@ -28,6 +32,10 @@
 
 +(NSRange) getPrevWordRange:(NSRange) inRange : (NSMutableArray *) list :(NSInteger *) index{
     
+    if(list.count<=0) {
+        NSRange range = NSMakeRange(0, 0);
+        return range;
+    }
      NSInteger iCount = 0;
     for(WordData *data in list) {
         iCount++;
