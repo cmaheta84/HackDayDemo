@@ -28,13 +28,18 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-
+    //self.textField.dataDetectorTypes = UIDataDetectorTypeAll;
+    
     self.finderView = [[UIView alloc]initWithFrame:CGRectMake(0,self.view.frame.size.height-67,self.view.frame.size.width,67)];
 	// Do any additional setup after loading the view, typically from a nib.
     // Add wiki button to UIMenuController
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *wikiItem = [[UIMenuItem alloc] initWithTitle:@"Find" action:@selector(find:)];
-    [menuController setMenuItems:[NSArray arrayWithObject:wikiItem]];
+    UIMenuItem *webItem = [[UIMenuItem alloc] initWithTitle:@"Web" action:@selector(webSearch:)];
+    [menuController setMenuItems:[NSArray arrayWithObjects:wikiItem,webItem, nil]];
+    
+   // UIMenuItem *webItem = [[UIMenuItem alloc] initWithTitle:@"Web" action:@selector(webSearch:)];
+    //[menuController setMenuItems:[NSArray arrayWithObject:webItem]];
     
     UIImageView *photoImg =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height/3*2+100)];
     photoImg.contentMode = UIViewContentModeScaleToFill;
@@ -71,7 +76,7 @@
     topView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self.finderView addSubview:topView];
     
-    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.finderView.frame.size.width-10, 20)];
+    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.finderView.frame.size.width-60, 20)];
     tf.font = [UIFont fontWithName:@"Helvetica" size:18];
     tf.backgroundColor=[UIColor whiteColor];
     tf.text=@"Hello World";
@@ -96,11 +101,20 @@
     [doneButton addTarget:self action:@selector(doneClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.finderView addSubview:doneButton];
     
+    UIButton *hiperlinkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [hiperlinkButton setTitle:@"Web" forState:UIControlStateNormal];
+    //[hiperlinkButton setTitleColor:[UIColor colorWithRed:204.0/255.0 green:33.0/255.0 blue:0.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [hiperlinkButton setFrame:CGRectMake(self.finderView.frame.size.width-50,10,40,20)];
+    [hiperlinkButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    [hiperlinkButton addTarget:self action:@selector(webSearchFromFinderView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.finderView addSubview:hiperlinkButton];
+    
     //[self.finderView setFrame:CGRectMake(0, 0,self.view.frame.size.width, 65)];
     //[self.finderView.superview bringSubviewToFront:self.finderView];
     
     self.finderView.hidden = YES ;
     [self.view addSubview:self.finderView];
+    
     wordsArray = [[NSMutableArray alloc] init];
     rangeArray = [[NSMutableArray alloc] init];
 }
@@ -165,18 +179,21 @@
     
     NSInteger total = wordsArray.count;
     NSInteger index = 0;
-    NSRange range = [WordData getPrevWordRange:self.textField.selectedRange :wordsArray:&index];
-    NSString *inStr = [@(index) stringValue];
-    NSString *totStr = [@(total) stringValue];
-    NSString *status = [[inStr stringByAppendingString:@" match of "]stringByAppendingString:totStr];
-    UITextField *tf = (UITextField *)[self.finderView viewWithTag:200];
-    tf.text = status;
+    if(total > 1)
+    {
+        NSRange range = [WordData getPrevWordRange:self.textField.selectedRange :wordsArray:&index];
+        NSString *inStr = [@(index) stringValue];
+        NSString *totStr = [@(total) stringValue];
+        NSString *status = [[inStr stringByAppendingString:@" match of "]stringByAppendingString:totStr];
+        UITextField *tf = (UITextField *)[self.finderView viewWithTag:200];
+        tf.text = status;
 
-    [self.textField select:self];
-    [self.textField setSelectedRange:range];
-    range.location += 200;
-    [self.textField scrollRangeToVisible:range];
-    [self.finderView reloadInputViews];
+        [self.textField select:self];
+        [self.textField setSelectedRange:range];
+        range.location += 200;
+        [self.textField scrollRangeToVisible:range];
+        [self.finderView reloadInputViews];
+    }
 }
 
 -(NSInteger) sameText {
@@ -200,22 +217,25 @@
     
     NSInteger total = wordsArray.count;
     NSInteger index = 0;
-
-    NSRange range = [WordData getNextWordRange:self.textField.selectedRange :wordsArray:&index];
     
-    NSString *inStr = [@(index) stringValue];
-    NSString *totStr = [@(total) stringValue];
-    NSString *status = [[inStr stringByAppendingString:@" match of "]stringByAppendingString:totStr];
-    UITextField *tf = (UITextField *)[self.finderView viewWithTag:200];
-    tf.text = status;
-    [self.textField select:self];
-    [self.textField setSelectedRange:range];
-    if(range.location>200) {
-    range.location += 200;
+    if(total > 1)
+    {
+        NSRange range = [WordData getNextWordRange:self.textField.selectedRange :wordsArray:&index];
+    
+        NSString *inStr = [@(index) stringValue];
+        NSString *totStr = [@(total) stringValue];
+        NSString *status = [[inStr stringByAppendingString:@" match of "]stringByAppendingString:totStr];
+        UITextField *tf = (UITextField *)[self.finderView viewWithTag:200];
+        tf.text = status;
+        [self.textField select:self];
+        [self.textField setSelectedRange:range];
+        if(range.location>200) {
+            range.location += 200;
+        }
+    
+        [self.textField scrollRangeToVisible:range];
+        [self.finderView reloadInputViews];
     }
-    
-    [self.textField scrollRangeToVisible:range];
-    [self.finderView reloadInputViews];
 }
 
 - (void) fillUpWordsData :(NSString *) userInput{
@@ -247,11 +267,57 @@
     [self.finderView setFrame:CGRectMake(0,self.view.frame.size.height-67,self.view.frame.size.width,67)];
 }
 
+-(void)webSearchFromFinderView:(id)sender {
+        UITextField *tf = (UITextField *)[self.finderView viewWithTag:100];
+        [self fillUpWordsData:tf.text];
+        NSRange range = NSMakeRange(0, 0);
+        [self.textField setSelectedRange:range];
+        NSString *urlStr = [NSString stringWithFormat:@"https://search.yahoo.com/search?p=%@",tf.text];
+        
+        // Create url object
+        NSURL *myURL = [[NSURL alloc] initWithString:urlStr];
+    
+        //URL encoding required here
+        urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:
+              NSASCIIStringEncoding];
+
+        // Open url in safari
+        [[UIApplication sharedApplication] openURL:myURL];
+}
+
+- (void)webSearch:(id)sender {
+    
+    if(![[_textField selectedTextRange] isEmpty]) {
+        
+        // Url string
+        NSString *urlStr = [NSString stringWithFormat:@"https://search.yahoo.com/search?p=%@",[_textField textInRange:[_textField selectedTextRange]]];
+        
+        //URL encoding required here
+        urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:
+                                NSASCIIStringEncoding];
+        // Create url object
+        NSURL *myURL = [[NSURL alloc] initWithString:urlStr];
+        
+        // Open url in safari
+        [[UIApplication sharedApplication] openURL:myURL];
+        
+    }
+}
+
+-(void)resetTextViewRange {
+    NSRange range = NSMakeRange(0, 0);
+    [self.textField select:self];
+    [self.textField setSelectedRange:range];
+}
 - (void)find:(id)sender {
+    
+    
     NSString *selectedText = [_textField textInRange:_textField.selectedTextRange];
     [self fillUpWordsData:selectedText];
-    [self.textField setFrame:CGRectMake(0, 50, self.textField.frame.size.width, self.textField.frame.size.height-50)];
-    self.finderView.hidden = NO;
+    if(self.finderView.hidden == YES) {
+        [self.textField setFrame:CGRectMake(0, 50, self.textField.frame.size.width, self.textField.frame.size.height-50)];
+        self.finderView.hidden = NO;
+    }
     NSInteger total = wordsArray.count;
     NSInteger index = 0;
     
@@ -263,9 +329,11 @@
     
     UITextField *tf = (UITextField *)[self.finderView viewWithTag:200];
     tf.text = status;
+    [self resetTextViewRange];
     [self.textField select:self];
     [self.textField setSelectedRange:range];
     range.location += 200;
     [self.textField scrollRangeToVisible:range];
+    
 }
 @end
