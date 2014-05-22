@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="58" width="320" height="415"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <mutableString key="text">                         It takes serious style and confidence to outdo Angelina Jolie on the red carpet.
+                                <string key="text">                         It takes serious style and confidence to outdo Angelina Jolie on the red carpet.
 Jane Fonda, 76, who's twice the age of the 38-year-old "Maleficent" star, managed to do it Wednesday at the Cannes Film Festival in France. She stepped out in a deep red, beaded and belted Elie Saab Fall 2013 Couture gown for the premiere of Nicole Kidman's movie "Grace of Monaco." Fonda accessorized her figure-fitting dress with a Gucci clutch, red earrings, and va-va-voom hair and lipstick.
 
 The gorgeous dress was familiar to anyone who saw Jolie wear the metallic version of the garment at the Oscars in March. Jolie sported the gown with straight tresses, soft makeup, and diamond jewels. The result was lovely; however, it fell short of a "fashion moment."
@@ -34,7 +34,7 @@ Jolie has traditionally chosen to cover up her svelte figure on the red carpet �
 
 [Related: 2 Years Later, Angelina Jolie Gets in on 'Angie's Right Leg' Meme]
 
-Meanwhile, the aerobics queen has obviously decided to make every appearance at Cannes count.</mutableString>
+Meanwhile, the aerobics queen has obviously decided to make every appearance at Cannes count.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
