@@ -29,8 +29,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     //self.textField.dataDetectorTypes = UIDataDetectorTypeAll;
+    CGRect finderViewRect = CGRectMake(0,self.view.frame.size.height-67,self.view.frame.size.width,67);
     
-    self.finderView = [[UIView alloc]initWithFrame:CGRectMake(0,self.view.frame.size.height-67,self.view.frame.size.width,67)];
+    CGRect searchTermRect = CGRectMake(10, 10, finderViewRect.size.width-60, 20);
+    CGRect prevBtnRect = CGRectMake(finderViewRect.size.width-45, 10, 10, 20);
+    CGRect nextBtnRect = CGRectMake(finderViewRect.size.width-15, 10, 10, 20);
+    
+    CGRect indicatorRect = CGRectMake(10, 32, 100, 10);
+    
+    CGRect searchWebRect = CGRectMake(10,45,110,20);
+    CGRect doneBtnRect = CGRectMake(finderViewRect.size.width-50, 45, 40, 20);
+    
+    
+    self.finderView = [[UIView alloc]initWithFrame:finderViewRect];
 	// Do any additional setup after loading the view, typically from a nib.
     // Add wiki button to UIMenuController
     UIMenuController *menuController = [UIMenuController sharedMenuController];
@@ -55,14 +66,14 @@
     nextImg.opaque = YES;
 
     UIButton *prevButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    prevButton.frame = CGRectMake(10, 35, 10, 20); // position in the parent view and set the size of the button
+    prevButton.frame = prevBtnRect; // position in the parent view and set the size of the button
     [prevButton addSubview:prevImg];
     [prevButton addTarget:self action:@selector(prevClicked:) forControlEvents:UIControlEventTouchUpInside];
     [prevButton setBackgroundColor: [self colorWithHexString:@"F3F3F3"]];
     [self.finderView addSubview:prevButton];
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    nextButton.frame = CGRectMake(35, 35, 10, 20); // position in the parent view and set the size of the button
+    nextButton.frame = nextBtnRect; // position in the parent view and set the size of the button
     [nextButton addSubview:nextImg];
     [nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -76,7 +87,7 @@
     topView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self.finderView addSubview:topView];
     
-    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.finderView.frame.size.width-60, 20)];
+    UITextField *tf = [[UITextField alloc] initWithFrame:searchTermRect];
     tf.font = [UIFont fontWithName:@"Helvetica" size:18];
     tf.backgroundColor=[UIColor whiteColor];
     tf.text=@"Hello World";
@@ -86,26 +97,28 @@
     tf.tag = 100;
     [self.finderView addSubview:tf];
     
-    UITextField *tf2 = [[UITextField alloc] initWithFrame:CGRectMake(60, 35, 100, 20)];
-    tf2.font = [UIFont fontWithName:@"Helvetica" size:13];
+    UITextField *tf2 = [[UITextField alloc] initWithFrame:indicatorRect];
+    tf2.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+    tf2.textColor = [UIColor grayColor];
     tf2.text = @"1 of 9 match";
     tf2.tag = 200;
     [self.finderView addSubview:tf2];
     
     
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    doneButton.frame = CGRectMake(self.finderView.frame.size.width-50, 35, 40, 20);
-    [doneButton setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    doneButton.frame = doneBtnRect;
+    [doneButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
     [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal ];
     [doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [doneButton addTarget:self action:@selector(doneClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.finderView addSubview:doneButton];
     
     UIButton *hiperlinkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [hiperlinkButton setTitle:@"Web" forState:UIControlStateNormal];
-    //[hiperlinkButton setTitleColor:[UIColor colorWithRed:204.0/255.0 green:33.0/255.0 blue:0.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [hiperlinkButton setFrame:CGRectMake(self.finderView.frame.size.width-50,10,40,20)];
-    [hiperlinkButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    [hiperlinkButton setTitle:@"Search on Web" forState:UIControlStateNormal];
+    UIColor *titleColor = [self colorWithHexString:@"324fe1"];
+    [hiperlinkButton setTitleColor:titleColor forState:UIControlStateNormal ];
+    [hiperlinkButton setFrame:searchWebRect];
+    [hiperlinkButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]];
     [hiperlinkButton addTarget:self action:@selector(webSearchFromFinderView:) forControlEvents:UIControlEventTouchUpInside];
     [self.finderView addSubview:hiperlinkButton];
     
